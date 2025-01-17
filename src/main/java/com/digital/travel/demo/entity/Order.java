@@ -1,13 +1,12 @@
 package com.digital.travel.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
 public class Order extends BaseModel {
 
     @Column(name = "customer_name")
@@ -21,5 +20,45 @@ public class Order extends BaseModel {
     private Double totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        product.setOrder(this);
+        this.products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
+        product.setOrder(null);
+    }
+
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
 }
