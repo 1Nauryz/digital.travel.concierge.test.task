@@ -4,6 +4,8 @@ package com.digital.travel.demo.controller;
 import com.digital.travel.demo.dto.LoginRequestDTO;
 import com.digital.travel.demo.service.JwtUtil;
 import com.digital.travel.demo.service.CustomUserDetailsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "Auth Controller", description = "Operations related to auth(users)")
 @RestController
 public class AuthController {
 
@@ -28,6 +31,7 @@ public class AuthController {
         this.customUserDetailsService = customUserDetailsService;
     }
 
+    @Operation(summary = "Login to get JWT Token", description = "Use email and password to get a JWT token.")
     @PostMapping("/login")
     public Map<String, String> createToken(@RequestBody LoginRequestDTO loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
