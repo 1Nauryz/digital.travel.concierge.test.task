@@ -22,6 +22,15 @@ public class Order extends BaseModel {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 
+    public Order(String customerName, OrderStatus status, double totalPrice, List<Product> products) {
+        this.customerName = customerName;
+        this.status = status;
+        this.totalPrice = totalPrice;
+        this.products = products;
+    }
+
+    public Order(){}
+
     public void addProduct(Product product) {
         product.setOrder(this);
         this.products.add(product);
